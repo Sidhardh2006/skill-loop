@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Skill Sharing Session</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      border: 2px solid black;
+    }
+
+    .left-area {
+      flex: 3;
+      position: relative;
+      background-color: #000;
+    }
+
+    .tutor-screen {
+      width: 100%;
+      height: 100%;
+      background-image: url('https://miro.medium.com/v2/resize:fit:807/1*_d8qFs5nA7qvhFiK2KoUMA.png');
+      background-size: cover;
+      background-position: top;
+    }
+
+    .buttons {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .buttons button {
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: background 0.3s;
+    }
+
+    .buttons button:hover {
+      background-color: #ddd;
+    }
+
+    .your-screen {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      width: 160px;
+      height: 110px;
+      border: 2px solid black;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Intellij_IDEA_2021.1_Community_Edition_screenshot.png/1200px-Intellij_IDEA_2021.1_Community_Edition_screenshot.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .right-area {
+      flex: 1.5;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+    }
+
+    .sections-preview {
+      flex: 1;
+      border-bottom: 2px solid black;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .sections-preview h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .session-list {
+      list-style: none;
+    }
+
+    .session-list li {
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+      transition: background 0.2s;
+      font-size: 14px;
+    }
+
+    .session-list li:hover {
+      background-color: #e0e0e0;
+      cursor: pointer;
+    }
+
+    .your-notes {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .your-notes label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .your-notes textarea {
+      flex: 1;
+      width: 100%;
+      resize: none;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Left Video Area -->
+  <div class="left-area">
+    <div class="tutor-screen"></div>
+
+    <!-- Interactive Buttons -->
+    <div class="buttons">
+      <button title="Cut"><i class="fas fa-phone-slash"></i></button>
+      <button title="React"><i class="fas fa-thumbs-up"></i></button>
+      <button title="Raise Hand"><i class="fas fa-hand-paper"></i></button>
+      <button title="Captions"><i class="fas fa-closed-captioning"></i></button>
+      <button title="More"><i class="fas fa-ellipsis-h"></i></button>
+    </div>
+
+    <!-- User's Own Video Feed -->
+    <div class="your-screen"></div>
+  </div>
+
+  <!-- Right Sidebar Area -->
+  <div class="right-area">
+    <!-- Skill Roadmap -->
+    <div class="sections-preview">
+      <h3>Skill Roadmap</h3>
+      <ul class="session-list">
+        <li><strong>🕒 3 min</strong> – Kickoff: Overview of Today’s Problem</li>
+        <li><strong>🕒 20 min</strong> – Sorting Algorithms Explained with Code</li>
+        <li><strong>🕒 7–10 min</strong> – Try it Yourself + Q&A Discussion</li>
+      </ul>
+    </div>
+
+    <!-- Notes Input Area -->
+    <div class="your-notes">
+      <label for="notes">Your Notes:</label>
+      <textarea id="notes" placeholder="Type your notes here..."></textarea>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
