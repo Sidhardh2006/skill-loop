@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skill Loop - Skill Exchange Made Simple</title>
+  <!-- Corrected Font Awesome link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    /* Nav bar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .search-bar {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 2rem;
+      position: relative; /* Added relative positioning */
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.6rem 2rem 0.6rem 1rem; /* Adjusted padding for space on the right */
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      font-size: 1rem;
+    }
+
+    .search-bar .search-icon {
+      position: absolute;
+      top: 50%;
+      right: 10px; /* Aligns the icon to the right */
+      transform: translateY(-50%); /* Centers the icon vertically */
+      color: #333;
+    }
+
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .auth-buttons button {
+      margin-left: 10px;
+      padding: 0.5rem 1rem;
+      border: 1px solid #4a90e2;
+      background: white;
+      color: #4a90e2;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .auth-buttons button.signup {
+      background: #4a90e2;
+      color: white;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: #e6f0ff;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .section {
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .skills, .mentors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      flex: 1 1 250px;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/2907/2907391.png" alt="Skill Loop Logo">
+      <h2>Skill Loop</h2>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search skills...">
+      <!-- Search Icon on the right inside the search bar -->
+      <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <div class="auth-buttons">
+      <button>Log In</button>
+      <button class="signup">Sign Up</button>
+    </div>
+  </nav>
+
+  <!-- Hero / Intro Section -->
+  <section class="hero">
+    <h1>Learn. Teach. Grow — Together.</h1>
+    <p>Skill Loop helps you connect with people of different skills to exchange knowledge and learn in fast, focused 30-minute sessions.</p>
+  </section>
+
+  <!-- Top Searched Skills Section -->
+  <section class="section">
+    <h2 style="text-align:center;">Top Searched Skills</h2>
+    <div class="skills">
+      <div class="card">
+        <h3>Web Development</h3>
+        <p>HTML, CSS, JavaScript, React and backend skills with real-world projects.</p>
+      </div>
+      <div class="card">
+        <h3>UI/UX Design</h3>
+        <p>Master tools like Figma, Sketch, and Adobe XD from top designers.</p>
+      </div>
+      <div class="card">
+        <h3>Digital Marketing</h3>
+        <p>SEO, social media strategy, Google Ads and email campaigns.</p>
+      </div>
+    </div

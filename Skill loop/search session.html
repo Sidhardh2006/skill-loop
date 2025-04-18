@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search & Book a Session – Skill Loop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome for icons -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensures the body takes up full height */
+    }
+
+    /* Navigation Bar */
+    .top-bar {
+      background: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: 1rem;
+    }
+
+    .logo img {
+      height: 36px;
+    }
+
+    .logo h2 {
+      font-size: 1.3rem;
+      color: #333;
+    }
+
+    .search-bar {
+      position: relative;
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.6rem 2.5rem 0.6rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      font-size: 1rem;
+    }
+
+    .search-bar i {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      color: #555;
+      font-size: 1rem;
+    }
+
+    /* User Menu */
+    .user-menu {
+      position: relative;
+      margin-left: auto;
+      cursor: pointer;
+    }
+
+    .user-menu i {
+      font-size: 2.2rem;
+      color: #444;
+    }
+
+    /* Notification Icon */
+    .notification-icon {
+      position: relative;
+      margin-left: 1rem;
+      font-size: 1.8rem;
+      color: #444;
+      cursor: pointer;
+    }
+
+    .notification-icon i {
+      font-size: 1.8rem;
+      color: #444;
+    }
+
+    .notification-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: red;
+      color: white;
+      font-size: 0.8rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Dropdown for notifications */
+    .notification-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      width: 250px;
+      z-index: 2000;
+    }
+
+    .notification-dropdown a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 0.9rem; /* Smaller text size */
+    }
+
+    .notification-dropdown a:hover {
+      background: #f0f0f0;
+    }
+
+    /* Show dropdown when notification icon is clicked */
+    .notification-icon.active .notification-dropdown {
+      display: block;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 0.5rem;
+      border-radius: 8px;
+      width: 150px;
+      z-index: 2000;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown a:hover {
+      background: #f0f0f0;
+    }
+
+    /* Show dropdown when user icon is hovered */
+    .user-menu:hover .dropdown {
+      display: block;
+    }
+
+    /* Session Search & List */
+    .search-results {
+      margin: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .user-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .user-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-card h3 {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .user-card p {
+      margin-top: 0.5rem;
+      color: #777;
+    }
+
+    .availability {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .slot {
+      background: #e0e7ff;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .slot.available:hover {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .slot.unavailable {
+      background-color: #fcdcdc;
+      color: #f87171;
+    }
+
+    .book-button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 2rem;
+      background: #4caf50;
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .book-button:hover {
+      background-color: #388e3c;
+    }
+
+    /* Footer */
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: auto; /* Ensures footer stays at the bottom */
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/2907/2907391.png" alt="Skill Loop Logo">
+      <h2>Skill Loop</h2>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" placeholder="Search skills...">
+      <i class="fas fa-search"></i>
+    </div>
+
+    <!-- User Menu and Notification Icon -->
+    <div class="user-menu">
+      <i class="fas fa-user-circle" id="userIcon"></i> <!-- User Icon -->
+    </div>
+
+    <!-- Notification Icon -->
+    <div class="notification-icon" id="notificationIcon">
+      <i class="fas fa-bell"></i>
+      <div class="notification-count">3</div> <!-- Notification count -->
+      <div class="notification-dropdown">
+        <a href="#">New session request from John Doe</a>
+        <a href="#">Jane Smith replied to your message</a>
+        <a href="#">Your session with Emily Brown is confirmed</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Search Results (Users) -->
+  <div class="search-results">
+    <div class="user-card">
+      <img src="https://i.pravatar.cc/150?img=1" alt="User Photo">
+      <h3>John Doe</h3>
+      <p>Web Development</p>
+
+      <div class="availability">
+        <span class="slot available">Monday 2 PM</span>
+        <span class="slot unavailable">Wednesday 3 PM</span>
+        <span class="slot available">Friday 10 AM</span>
+      </div>
+
+      <a href="#" class="book-button">Book Session</a>
+    </div>
+
+    <div class="user-card">
+      <img src="https://i.pravatar.cc/150?img=2" alt="User Photo">
+      <h3>Jane Smith</h3>
+      <p>Graphic Design</p>
+
+      <div class="availability">
+        <span class="slot available">Tuesday 11 AM</span>
+        <span class="slot unavailable">Thursday 4 PM</span>
+        <span class="slot available">Saturday 9 AM</span>
+      </div>
+
+      <a href="#" class="book-button">Book Session</a>
+    </div>
+
+    <div class="user-card">
+      <img src="https://i.pravatar.cc/150?img=3" alt="User Photo">
+      <h3>Emily Brown</h3>
+      <p>SEO Specialist</p>
+
+      <div class="availability">
+        <span class="slot available">Monday 10 AM</span>
+        <span class="slot available">Thursday 2 PM</span>
+        <span class="slot unavailable">Friday 5 PM</span>
+      </div>
+
+      <a href="#" class="book-button">Book Session</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Skill Loop – All Rights Reserved</p>
+  </footer>
+
+  <script>
+    document.getElementById('notificationIcon').addEventListener('click', function () {
+      this.classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>

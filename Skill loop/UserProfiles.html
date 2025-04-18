@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile – Skill Loop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome for icons -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    /* Navigation Bar */
+    .top-bar {
+      background: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      gap: 1rem;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: 1rem;
+    }
+
+    .logo img {
+      height: 36px;
+    }
+
+    .logo h2 {
+      font-size: 1.3rem;
+      color: #333;
+    }
+
+    /* Search bar */
+    .search-bar {
+      position: relative;
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.6rem 2.5rem 0.6rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      font-size: 1rem;
+    }
+
+    .search-bar i {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      color: #555;
+      font-size: 1rem;
+    }
+
+    /* User Menu */
+    .user-menu {
+      position: relative;
+      margin-left: auto;
+    }
+
+    .user-menu i {
+      font-size: 2.2rem;
+      cursor: pointer;
+      color: #444;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 0.5rem;
+      border-radius: 8px;
+      width: 150px;
+      z-index: 2000;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown a:hover {
+      background: #f0f0f0;
+    }
+
+    /* Show dropdown when user icon is hovered */
+    .user-menu:hover .dropdown {
+      display: block;
+    }
+
+    /* Profile Page */
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .profile-header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-header h2 {
+      margin-bottom: 0.3rem;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 1rem;
+      color: #ffc107;
+    }
+
+    .stars {
+      display: flex;
+      gap: 5px;
+    }
+
+    .star {
+      font-size: 24px;
+      cursor: pointer;
+      color: #e0e0e0;
+    }
+
+    .star.filled {
+      color: #ffc107;
+    }
+
+    .rating-value {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .skills, .availability, .sessions {
+      margin-top: 2rem;
+    }
+
+    .skills ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+      gap: 10px;
+    }
+
+    .skills li {
+      background: #e0e7ff;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .availability .slot {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      margin: 0.3rem;
+      background: #d1fae5;
+      border: 1px solid #10b981;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .availability .slot.unavailable {
+      background: #fcdcdc;
+      border-color: #f87171;
+      text-decoration: line-through;
+    }
+
+    .sessions .session {
+      background: #f1f1f1;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .session-details {
+      display: none;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .session.active .session-details {
+      display: block;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/2907/2907391.png" alt="Skill Loop Logo">
+      <h2>Skill Loop</h2>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" placeholder="Search skills...">
+      <i class="fas fa-search"></i> <!-- Search Icon -->
+    </div>
+
+    <!-- User Menu -->
+    <div class="user-menu">
+      <i class="fas fa-user-circle" id="userIcon"></i> <!-- User Icon -->
+      <div class="dropdown" id="dropdownMenu">
+        <a href="#">Dashboard</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Page -->
+  <div class="container">
+    <div class="profile-header">
+      <img src="https://i.pravatar.cc/150?img=23" alt="User Photo">
+      <div>
+        <h2>Alex Martinez</h2>
+        <p>Web Developer & Digital Marketer. Passionate about teaching and skill sharing. Here to learn design and teach full stack dev!</p>
+      </div>
+
+      <!-- Rating Block -->
+      <div class="rating">
+        <div class="stars">
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star">★</span>
+        </div>
+        <div class="rating-value">4.0/5.0</div>
+      </div>
+    </div>
+
+    <div class="skills">
+      <h3>Skills</h3>
+      <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+        <li>React</li>
+        <li>Digital Marketing</li>
+        <li>SEO</li>
+      </ul>
+    </div>
+
+    <div class="availability">
+      <h3>Availability</h3>
+      <p>Click to mark unavailable slots:</p>
+      <div>
+        <span class="slot">Monday 6 PM</span>
+        <span class="slot">Tuesday 10 AM</span>
+        <span class="slot">Wednesday 4 PM</span>
+        <span class="slot">Thursday 6 PM</span>
+        <span class="slot">Friday 3 PM</span>
+      </div>
+    </div>
+
+    <div class="sessions">
+      <h3>Past Sessions</h3>
+
+      <div class="session">
+        <strong>React Basics with Priya Sharma</strong>
+        <div class="session-details">
+          ✅ Completed on March 12  
+          🔁 Exchanged React for SEO tips  
+          Feedback: “Very friendly and explained React hooks really well.”
+        </div>
+      </div>
+
+      <div class="session">
+        <strong>Digital Marketing Exchange with Omar Ali</strong>
+        <div class="session-details">
+          ✅ Completed on March 5  
+          🔁 Shared email campaign strategies, learned about analytics tools  
+          Feedback: “Awesome skill exchange!”
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Toggle availability
+    document.querySelectorAll('.slot').forEach(slot => {
+      slot.addEventListener('click', () => {
+        slot.classList.toggle('unavailable');
+      });
+    });
+
+    // Toggle session detail view
+    document.querySelectorAll('.session').forEach(session => {
+      session.addEventListener('click', () => {
+        session.classList.toggle('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
