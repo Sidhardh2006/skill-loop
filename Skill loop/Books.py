@@ -31,9 +31,12 @@ def display_books(books):
 
 def main():
     search_query = input("Enter a book title or author to search: ")
-    webbrowser.open("https://www.google.com/search?udm=36&q="+search_query)
     books = get_books(search_query)
     display_books(books)
+    a=input("do you need books : ")
+    if (a=="yes"):
+        webbrowser.open("https://www.google.com/search?udm=36&q="+search_query)
+    
 
 if _name_ == "_main_":
     main()
